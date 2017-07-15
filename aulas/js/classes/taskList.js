@@ -18,7 +18,7 @@ class TaskList {
             },
             onCancel: function () {
                 console.log("cancel");
-            
+
             },
             onDelete: function () {
                 self.delete();
@@ -56,6 +56,8 @@ class TaskList {
                 $li = $input.closest("li"),
                 id = $li.data("id"),
                 item = _dataSource.findById(id);
+            
+                form.enableButton(false, true, true);
             console.log(">>>> ID: " + id);
 
             e.preventDefault();
@@ -79,7 +81,7 @@ class TaskList {
 
         if (item.TITULO != null && item.DESCRICAO != null) {
             if (item.hasOwnProperty("SEQLISTA") && item.SEQLISTA > 0) {
-                this.dataSource.edit(item);
+                this.dataSource.edit(item);                
             } else {
                 this.dataSource.add(item);
             }
@@ -98,7 +100,8 @@ class TaskList {
     refresh() {
         let html
             , template = this.itemTemplate
-            , data = this.dataSource.getData();
+            , data = this.dataSource.getData()
+            , form  = this.form;
 
         //reduce funciona como um 'acumulador'  
         html = data.reduce(function (ant, obj) {
@@ -106,7 +109,7 @@ class TaskList {
         }, '');
 
         this.$list.html(html);
-        this.form.enableButton(false, false, false);
+        form.enableButton(false, false, false);
     }
 
 }

@@ -101,13 +101,14 @@ class TaskForm {
         });
         //keyup
         this.$titulo.keyup(function () {
-            if (_this.checkIsFill(_this.$titulo) && _this.checkIsFill(_this.$descricao)) {
+
+            if (_this.checkIsFill(_this.$titulo.val()) && _this.checkIsFill(_this.$descricao.val())) {
                 _this.enableButton(true, true, true);
             }
         });
 
         this.$descricao.keyup(function () {
-            if (_this.checkIsFill(_this.$titulo) && _this.checkIsFill(_this.$descricao)) {
+            if (_this.checkIsFill(_this.$titulo.val()) && _this.checkIsFill(_this.$descricao.val())) {
                 _this.enableButton(true, true, true);
             }
         });
@@ -123,7 +124,7 @@ class TaskForm {
     }
 
     checkIsFill(field) {
-        return (field != null);
+        return (field != '');
     }
 
     enableButton(stSave, stCancel, stDelete) {
