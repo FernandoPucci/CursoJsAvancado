@@ -1,0 +1,38 @@
+--ANOTAÇÕES GERAIS CURSO JAVASCRIPT AVANÇADO 15/06/2017
+
+listaDeTarefas.form.fill({TITULO: "Minha Tarefa", DESCRICAO: "Descrição Dela"})
+
+StopImmediatePropagation - não permite propagação do evento para os nós acima do DOM
+
+NOOP: 
+
+onSave = $.noop;   (mesmo uqe uma função vazia)
+
+EXEMPLO EXTEND:
+*preferencia da direita para esquerda
+
+        let objeto1 = {rodas:4};
+        let objeto2 = {volante:4};
+        let objeto3 = {cor:"cinza"};
+        let objeto4 = {direcaoHidraulica:false};
+        let carro = $.extend({}, objeto1, objeto2, objeto3, objeto4);
+
+//true propaga as propriedades para outros objetos 
+        let objeto1 = { rodas: 4 };
+        let objeto2 = { volante: 4, bancos: { material: "couro", lugares: 2 } };
+        let objeto3 = { cor: "cinza", bancos: { lugares: 5 } };
+        let objeto4 = { direcaoHidraulica: false };
+        let carro = $.extend(true, {}, objeto1, objeto2, objeto3, objeto4);
+//FUNCAO REDUCE:
+//Acumulador de vetor:
+var x = [10,20,30];
+data.reduce(function (ant, obj) {
+            return ant + template(obj);
+        }, '');
+//Retornará 102030
+
+var x = [10,20,30];
+data.reduce(function (ant, obj) {
+            return ant + template(obj);
+        }, 0);
+//Retornará 60
