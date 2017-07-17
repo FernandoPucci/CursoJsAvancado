@@ -68,15 +68,26 @@ class TaskForm {
 
     }
 
-    clear() {
+    removeBotoesRealizados(id) {
 
+        this.$form = $(this.html());
+        let btnDone = this.$form.find("[name='btnDone" + id + "']");
+        let btnEdit = this.$form.find("[name='btnEdit" + id + "']");
+
+        btnDone.hide();
+        btnEdit.hide();
+
+
+    }
+
+    clear() {
+        
         //variavel 'private' para criar um 'cash' dos dados nesta variavel
         this._data = {};
         this.$titulo.val("");
         this.$descricao.val("");
         this.enableButton(false, false, false);
-
-
+        
     }
 
     applyEvents() {

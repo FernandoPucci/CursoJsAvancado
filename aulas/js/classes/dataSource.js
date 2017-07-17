@@ -7,7 +7,9 @@ class DataSource {
             onReadFinish: function () {
 
             },
-            readUrl: ""
+            readUrl: "",
+            DTACONCLUSAO:"",
+            STRIKE: false
         };
 
         this.settings = $.extend(true, {}, defaults, settings);
@@ -29,12 +31,13 @@ class DataSource {
 
         $.when(requisicao).then(function (r) {
             _this._data = r.data;
-            _this.settings.onReadFinish.apply(_thid, [r]);            
+            _this.settings.onReadFinish.apply(_this, [r]);
         });
     }
 
     add(item) {
         item[this.settings.primaryKey] = ++this.currentPK;
+        item[this.settings.dtaConclusao] = "";
         this._data.push(item);
     }
 
@@ -86,6 +89,14 @@ class DataSource {
         return this._data.filter(function (item) {
             return item[pk] == id;
         })[0];//FirstOrDefault
+    }
+
+    setDataConclusao(item) {
+      
+        item.DTACONCLUSAO = new Date().toLocaleString();
+        item.STRIKE = true;
+        this.edit(item);       
+
     }
 
 }

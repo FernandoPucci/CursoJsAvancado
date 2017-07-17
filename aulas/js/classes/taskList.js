@@ -55,25 +55,49 @@ class TaskList {
             var $input = $(this),
                 $li = $input.closest("li"),
                 id = $li.data("id"),
-                item = _dataSource.findById(id);
-            
-                form.enableButton(false, true, true);
-            console.log(">>>> ID: " + id);
+                item = _dataSource.findById(id),
+                itemRealizado = $input.data("id");
+
+            form.enableButton(false, true, true);
 
             e.preventDefault();
-            form.fill(item);
+
+
+            if (itemRealizado != null) {
+                _dataSource.setDataConclusao(item);
+                $li.wrap("<strike>");
+                $li.find("input").remove();
+                form.clear();
+            } else {
+                form.fill(item);
+            }
 
         });
     }
 
+
     //template de lista
     itemTemplate(item) {
-        return "<li data-id='" + item.SEQLISTA + "'><b>" + item.TITULO
+
+        let html = "<li data-id='" + item.SEQLISTA + "'><b>" + item.TITULO
             + "</b> | <small>&nbsp;"
             + item.DESCRICAO
-            + "</small>"
-            + "&nbsp;|&nbsp;<input type='button' value='Editar' />&nbsp;"
-            + "</li>";
+            + "</small>&nbsp;|&nbsp;";
+
+        if (!item.STRIKE) {
+            html += "<input type='button' value='Editar' name='btnEdit" + item.SEQLISTA + "'/>&nbsp;"
+                + "&nbsp;|&nbsp"
+                + "<input type='button' value='Marcar Como Realizada' name='btnDone"
+                + item.SEQLISTA + "' data-id='" + item.SEQLISTA + "' />";
+        }
+
+        html += "&nbsp;</li>";
+
+        if (item.STRIKE) {
+            return html.strike();
+        } else {
+            return html;
+        }
     }
 
     save() {
@@ -81,7 +105,7 @@ class TaskList {
 
         if (item.TITULO != null && item.DESCRICAO != null) {
             if (item.hasOwnProperty("SEQLISTA") && item.SEQLISTA > 0) {
-                this.dataSource.edit(item);                
+                this.dataSource.edit(item);
             } else {
                 this.dataSource.add(item);
             }
@@ -101,7 +125,7 @@ class TaskList {
         let html
             , template = this.itemTemplate
             , data = this.dataSource.getData()
-            , form  = this.form;
+            , form = this.form;
 
         //reduce funciona como um 'acumulador'  
         html = data.reduce(function (ant, obj) {
