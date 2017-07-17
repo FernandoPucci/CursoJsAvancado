@@ -8,8 +8,8 @@ class DataSource {
 
             },
             readUrl: "",
-            DTACONCLUSAO:"",
-            STRIKE: false
+            dtaConclusao:"",
+            strike: false
         };
 
         this.settings = $.extend(true, {}, defaults, settings);
@@ -38,6 +38,7 @@ class DataSource {
     add(item) {
         item[this.settings.primaryKey] = ++this.currentPK;
         item[this.settings.dtaConclusao] = "";
+        item[this.settings.strike] = false;
         this._data.push(item);
     }
 
@@ -89,6 +90,14 @@ class DataSource {
         return this._data.filter(function (item) {
             return item[pk] == id;
         })[0];//FirstOrDefault
+    }
+
+    getNaoRealizadas(){
+        debugger;
+        return this._data.filter(function(item){
+            return item.STRIKE == false;
+        });
+
     }
 
     setDataConclusao(item) {

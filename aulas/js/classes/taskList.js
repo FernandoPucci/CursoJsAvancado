@@ -5,7 +5,7 @@ class TaskList {
 
         this.$element = $(selector);
 
-        this.dataSource = new DataSource({ primaryKey: "SEQLISTA" });
+        this.dataSource = new DataSource({ primaryKey: "SEQLISTA", strike: "STRIKE", dtaConclusao:"DTACONCLUSAO" });
 
         let self = this;
 
@@ -23,6 +23,10 @@ class TaskList {
             onDelete: function () {
                 self.delete();
                 console.log("delete");
+            },
+            showNaoRealizadas: function () {
+                console.log("Realizadas");
+                self.showNaoRealizadas();
             }
 
 
@@ -119,6 +123,20 @@ class TaskList {
 
         this.dataSource.delete(item);
         this.refresh();
+    }
+
+    showNaoRealizadas() {
+
+        let data = this.dataSource.getNaoRealizadas()
+            , template = this.itemTemplate
+            , html;
+
+        html = data.reduce(function (ant, obj) {
+            return ant + template(obj);
+        }, '');
+
+        this.$list.html(html);
+
     }
 
     refresh() {

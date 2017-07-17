@@ -12,6 +12,9 @@ class TaskForm {
             },
             onDelete: function () {
                 console.log("onDelete Default");
+            },
+            showNaoRealizadas:function(){
+            
             }
         };
 
@@ -37,6 +40,8 @@ class TaskForm {
         this.$titulo = this.$form.find("[name='TITULO']");
         this.$descricao = this.$form.find("[name='DESCRICAO']");
 
+        this.$exibirNaoRealizadas = this.$form.find("[name='naoRealizada']");
+
         this.applyEvents();
 
     }
@@ -54,6 +59,7 @@ class TaskForm {
         html += "<input type='submit' name='save' value='Salvar'></input>";
         html += "<input type='button' name='cancel' value='Cancelar'></input>";
         html += "<input type='button' name='delete' value='Excluir'></input>";
+        html += "<label><input type='checkbox' name='naoRealizada'></input>Exibir somente não realizadas</label>";
 
 
         return "<form>" + html + "</form>";
@@ -77,17 +83,16 @@ class TaskForm {
         btnDone.hide();
         btnEdit.hide();
 
-
     }
 
     clear() {
-        
+
         //variavel 'private' para criar um 'cash' dos dados nesta variavel
         this._data = {};
         this.$titulo.val("");
         this.$descricao.val("");
         this.enableButton(false, false, false);
-        
+
     }
 
     applyEvents() {
@@ -110,6 +115,12 @@ class TaskForm {
             e.preventDefault();
             _this.delete();
         });
+
+        this.$exibirNaoRealizadas.click(function (e) {
+            e.preventDefault();
+            _this.listarNaoRealizadas();
+        });
+
         //keyup
         this.$titulo.keyup(function () {
 
@@ -163,6 +174,14 @@ class TaskForm {
         this.settings.onDelete.apply(this, [e]);
         console.log("Apagado!");
         this.clear();
+    }
+
+    listarNaoRealizadas(e) {
+       
+        this.settings.showNaoRealizadas.apply(this, [e]);
+        console.log("Exibindo somente não realizadas");
+        this.clear();
+
     }
 
     //metodo para retornar os dados para o TaskList
