@@ -5,7 +5,7 @@ class TaskList {
 
         this.$element = $(selector);
 
-        this.dataSource = new DataSource({ primaryKey: "SEQLISTA", strike: "STRIKE", dtaConclusao:"DTACONCLUSAO" });
+        this.dataSource = new DataSource({ primaryKey: "SEQLISTA", strike: "STRIKE", dtaConclusao: "DTACONCLUSAO" });
 
         let self = this;
 
@@ -65,7 +65,6 @@ class TaskList {
             form.enableButton(false, true, true);
 
             e.preventDefault();
-
 
             if (itemRealizado != null) {
                 _dataSource.setDataConclusao(item);
@@ -127,14 +126,21 @@ class TaskList {
 
     showNaoRealizadas() {
 
-        let data = this.dataSource.getNaoRealizadas()
+        let form = this.form
+            , data
             , template = this.itemTemplate
             , html;
+
+        if (form.$exibirNaoRealizadas.is(":checked")) {
+            data = this.dataSource.getNaoRealizadas();
+        } else {
+            data = this.dataSource.getData();
+        }
 
         html = data.reduce(function (ant, obj) {
             return ant + template(obj);
         }, '');
-
+        form.enableButton(false, false, false);
         this.$list.html(html);
 
     }

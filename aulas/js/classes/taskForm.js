@@ -117,7 +117,7 @@ class TaskForm {
         });
 
         this.$exibirNaoRealizadas.click(function (e) {
-            e.preventDefault();
+           // e.preventDefault();
             _this.listarNaoRealizadas();
         });
 
@@ -180,6 +180,7 @@ class TaskForm {
        
         this.settings.showNaoRealizadas.apply(this, [e]);
         console.log("Exibindo somente não realizadas");
+
         this.clear();
 
     }

@@ -93,7 +93,6 @@ class DataSource {
     }
 
     getNaoRealizadas(){
-        debugger;
         return this._data.filter(function(item){
             return item.STRIKE == false;
         });
